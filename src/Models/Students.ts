@@ -1,12 +1,9 @@
 export interface StudentResponseModel {
-        ID :string,
+        ID :number,
         FirstName :string,
         MiddleName :string,
         LastName :string,
         RegisterationNo :string,
-        TestMarks :string,
-        InterviewMarks :string,
-        TotalMarks :string,
         PhoneNo :string,
         Address :string,
         Department :string,

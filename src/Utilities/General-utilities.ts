@@ -1,3 +1,3 @@
 export const EntityName = {
-    Student : "student"
+    Student : "Student"
 }

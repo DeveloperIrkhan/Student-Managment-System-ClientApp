@@ -19,6 +19,7 @@
 	top: 40vh !important;
 	z-index: 999 !important;
 }
-.backgoundColor{
-	background-color: red;
+.col-lg-5 .myInput{
+	border: none!;
+	border-radius: 20px;
 }

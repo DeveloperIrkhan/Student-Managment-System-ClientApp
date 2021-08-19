@@ -1,13 +1,12 @@
 import './App.css';
-import { Students } from './Pages/Students';
+import { GerAllStudents } from './Pages/GerAllStudents';
 
 
 
 function App() {
   return (
     <div className="container">
-      <h2>Hello</h2>
-      <Students/>
+      <GerAllStudents/>
     </div>
   );
 }
