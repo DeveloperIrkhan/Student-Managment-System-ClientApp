@@ -1,4 +1,5 @@
-import { serialize } from "object-to-formdata";
+// import { serialize } from "object-to-formdata";
+import { StudentResponseModel } from "../Models/Students";
 import { loading } from "./Gernal-Utilities";
 
 ////////////////////////API_URL////////////////////////
@@ -12,26 +13,30 @@ export const API_ENDPOINTS = {
 }
 ////////////////////////APIs////////////////////////////////////
 
-export async function ExecuteAPI<T>(endPoint: string) {
+export async function ExecuteAPI<T>(endPoint: string, std:StudentResponseModel) {
 	try {
 		loading(true);
-		let apiPath = API_URL;
-		const formData = serialize(endPoint);
-		const response = await fetch(`${apiPath}${endPoint}`, {
+		const apiPath = API_URL;
+		// const formData = serialize(std);
+		fetch(`${apiPath}${endPoint}`, {
 			method: "GET",
-			body: formData,
-		});
-		return response.json().then(async (res) => {
+			// body: formData,
+		}).then(resp => resp.json())
+		.then(async (res) => {
 			loading(false);
+			console.log("this from api"+res)
 			return (await res) as T;
 		});
 	} catch (error) {
 		loading(false);
 	}
+	finally{
+		loading(false);
+	}
 }
 
 
-export async function ExecuteAPI_GET_Students<T>( endPoint: string, entity?: string) {
-	const response: any = await ExecuteAPI<T>(endPoint);
+export async function ExecuteAPI_GET_Students<T>( endPoint: string, Getdata?: any) {
+	const response: any = await ExecuteAPI<T>(endPoint,Getdata);
 	return response as T;
 }

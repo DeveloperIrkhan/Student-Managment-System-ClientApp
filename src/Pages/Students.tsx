@@ -14,10 +14,12 @@ export class Students extends React.Component<Props, State> {
         this.state = {
             StudentDetails : Object()
         };
+        this.GetStudents=this.GetStudents.bind(this);
     }
    
     async GetStudents() {
         try{
+            loading(true);
             await GetAllStudents()
             .then((res : StudentResponseModel)=>{
                 if(res){
@@ -30,13 +32,38 @@ export class Students extends React.Component<Props, State> {
             });
         } catch (error) {}
     }
+    componentDidMount(){
+        this.GetStudents();
+    }
     render() {
-        let Studentdetails = this.state.StudentDetails;
-        console.log(Students)   
-        console.log(Studentdetails)
+        let Studentlist = this.state.StudentDetails;
+        alert(Studentlist.ID)
         return (
             <div className="">
-                {Studentdetails}
+                <table className="table table-bordered">
+                    <thead className="table bg-success text-white">
+                        <tr>
+                            <th>ID</th>
+                            <th>First Name</th>
+                            <th>Middle Name</th>
+                            <th>Last Name</th>
+                            <th>Registeration No</th>
+                            <th>Test Marks</th>
+                            <th>Interview Marks</th>
+                            <th>Total Marks</th>
+                            <th>Phone No</th>
+                            <th>Address</th>
+                            <th>Department</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            <tr>
+                                <td>{Studentlist.ID}</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         )
     }
