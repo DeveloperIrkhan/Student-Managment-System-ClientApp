@@ -1,5 +1,7 @@
+import internal from "stream";
+
 export interface StudentResponseModel {
-        ID :number,
+        Id:number,
         FirstName :string,
         MiddleName :string,
         LastName :string,

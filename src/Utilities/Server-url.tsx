@@ -24,7 +24,6 @@ export async function ExecuteAPI<T>(endPoint: string, std:StudentResponseModel) 
 		}).then(resp => resp.json())
 		.then(async (res) => {
 			loading(false);
-			console.log("this from api"+res)
 			return (await res) as T;
 		});
 	} catch (error) {
