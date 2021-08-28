@@ -1,26 +1,18 @@
-// import { serialize } from "object-to-formdata";
 import { StudentResponseModel } from "../Models/Students";
 import { loading } from "./Gernal-Utilities";
+
 
 ////////////////////////API_URL////////////////////////
 export const API_URL = "https://localhost:44378/";
 
-//////////////////////////API_ENDPOINTS/////////////////////////
-export const API_ENDPOINTS = {
-    Student: {
-        GetAllStudents: "Student/GetStudents"
-    }
-}
 ////////////////////////APIs////////////////////////////////////
 
 export async function ExecuteAPI<T>(endPoint: string, std:StudentResponseModel) {
 	try {
 		loading(true);
 		const apiPath = API_URL;
-		// const formData = serialize(std);
 		fetch(`${apiPath}${endPoint}`, {
 			method: "GET",
-			// body: formData,
 		}).then(resp => resp.json())
 		.then(async (res) => {
 			loading(false);

@@ -1,46 +1,45 @@
 import React from 'react'
-import { StudentResponseModel } from '../Models/Students';
+import { Department, StudentResponseModel } from '../Models/Students';
 import { loading } from '../Utilities/Gernal-Utilities';
-interface Props {}
+interface Props { }
 
 interface State {
-    StudentDetails : StudentResponseModel[],
+    StudentDetails: StudentResponseModel[],
 }
 
 export class GerAllStudents extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            StudentDetails : [],
+            StudentDetails: []
         };
-        this.GetAllStudents=this.GetAllStudents.bind(this);
+        this.GetStudents = this.GetStudents.bind(this);
     }
-    async GetAllStudents(){
+    async GetStudents() {
         loading(true)
-        let url = `https://localhost:44378/Student/GetStudents`;
-        fetch(url,{
-            method:"GET",
-            mode:"cors"
+        let url = 'https://localhost:44378/student/GetStudents';
+        fetch(url, {
+            method: "GET",
         })
-        .then((response)=>{
-            if(!response.ok){
-                loading(true)
-            }
-            return response.json()
-        })
-        .then(data =>{
-            this.setState({ StudentDetails: data })
-            loading(false);
-        })
-        }
-    // async GetAllStudents() {
+            .then((response) => {
+                if (!response.ok) {
+                    loading(true)
+                }
+                return response.json()
+            })
+            .then(data => {
+                this.setState({ StudentDetails: data })
+                loading(false);
+            })
+    }
+    // async GetStudents() {
     //     try{
     //         loading(true);
     //         await GetAllStudents()
     //         .then((res : StudentResponseModel)=>{
     //             if(res){
     //                 const StudentDetails = res;
-    //                 this.setState({StudentDetails:{ ...StudentDetails }});
+    //                 this.setState({StudentDetails :{ ...StudentDetails }});
     //             }
     //         })
     //         .catch(() => {
@@ -48,13 +47,13 @@ export class GerAllStudents extends React.Component<Props, State> {
     //         });
     //     } catch (error) {}
     // }
-    componentDidMount(){
-      this.GetAllStudents()
+    componentDidMount() {
+        this.GetStudents();
     }
     render() {
         let Student = this.state.StudentDetails;
-        
         console.log(Student)
+
         return (
             <div className="my-5">
                 <h3 className="text-center">All Student Record</h3>
@@ -73,30 +72,41 @@ export class GerAllStudents extends React.Component<Props, State> {
                         </tr>
                     </thead>
                     <tbody>
-                        { Student?.map((std,key)=>{
-                               return(
-                                   <tr key={key}>
-                                       <td className='text-center'
-                                       ><a
-                                        className="btn btn-outline-danger rounded rounded-circle"
-                                       >{key+1}</a></td>
-                                       <td>{std.FirstName}</td>
-                                       <td>{std.MiddleName}</td>
-                                       <td>{std.LastName}</td>
-                                       <td>{std.RegisterationNo}</td>
-                                       <td>{std.PhoneNo}</td>
-                                       <td>{std.Address}</td>
-                                       <td>{std.Department}</td>
-                                       <td className="text-center">
-                                           <span>
-                                           <button className='btn btn-success btn-sm mx-1'><i className="bi bi-pencil-fill"></i></button>
-                                               <button className='btn btn-danger btn-sm mx-1'><i className="bi bi-trash"></i></button>
-                                           </span>
-                                        </td>
-                                       {console.log(std.FirstName)}
-                                   </tr>
-                               )
-                           })}
+                        {Student?.map((std, key) => {
+                            return (
+                                <tr key={key} className="text-center">
+                                    <td>
+                                        {std.id}</td>
+                                    <td>
+                                        {std.firstName}
+                                    </td>
+                                    <td>
+                                        {std.middleName}
+                                    </td>
+                                    <td>
+                                        {std.lastName}
+                                    </td>
+                                    <td>
+                                        {std.registerationNo}
+                                    </td>
+                                    <td>
+                                        {std.phoneNo}
+                                    </td>
+                                    <td>
+                                        {std.address}
+                                    </td>
+                                    <td>
+                                        {std.department}
+                                    </td>
+                                    <td>
+                                        <span>
+                                            <button className='btn btn-outline-success btn-sm mx-1'><i className="bi bi-pencil-fill"></i></button>
+                                            <button className='btn btn-outline-danger btn-sm mx-1'><i className="bi bi-trash"></i></button>
+                                        </span>
+                                    </td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
             </div>

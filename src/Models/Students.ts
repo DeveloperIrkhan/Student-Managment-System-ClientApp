@@ -1,12 +1,19 @@
 import internal from "stream";
 
 export interface StudentResponseModel {
-        Id:number,
-        FirstName :string,
-        MiddleName :string,
-        LastName :string,
-        RegisterationNo :string,
-        PhoneNo :string,
-        Address :string,
-        Department :string,
+        id:number,
+        firstName :string,
+        middleName :string,
+        lastName :string,
+        registerationNo :string,
+        phoneNo :string,
+        address :string,
+        department :Department,
+}
+export enum Department {
+        IT =1,
+        HR,
+        Finance,
+        Networks,
+        Administration
 }
