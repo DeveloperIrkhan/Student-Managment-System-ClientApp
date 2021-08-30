@@ -23,3 +23,41 @@
 	border: none!;
 	border-radius: 20px;
 }
+.navstyle{
+	text-decoration: none;
+	color:white;
+}
+.f-20b{
+	font-size: 20px;
+	font-weight: 600;
+}
+.f-20{
+	font-size: 20px;
+	font-weight: 400;
+}
+.f-16b{
+	font-size: 16px;
+	font-weight: 600;
+}
+.f-16{
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.box{
+	background-color: gray;
+	border-radius: 70px;
+	box-shadow:  2px 2px 10px gray;
+}
+.trim {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.modelbackgound{
+	background-color: rgb(146, 146, 146);
+	height: 100%;
+	width: 100%;
+	position:fixed;
+	transition: all 1.3s;
+}

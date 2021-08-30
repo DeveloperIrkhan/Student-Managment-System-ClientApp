@@ -8,7 +8,7 @@ export interface StudentResponseModel {
         registerationNo :string,
         phoneNo :string,
         address :string,
-        department :Department,
+        department :string,
 }
 export enum Department {
         IT =1,

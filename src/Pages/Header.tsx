@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 interface Props { }
 
 interface State { }
@@ -11,24 +12,33 @@ export class Header extends React.Component<Props, State> {
 
     render() {
         return (
-                <nav className="navbar navbar-expand-lg navbar-dark text-light bg-dark">
-                    <div className="container">
-                    <a className="navbar-brand" href="#">Student Management System</a>
+            <nav className="navbar navbar-expand-lg navbar-dark text-light bg-dark">
+                <div className="container">
+                <Link className="navstyle" to="/"><span className="navbar-brand">Student Management System</span></Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
+                        <li className="nav-item active">
+                                <Link className="navstyle" to="/add-new-students">
+                                    <span className="nav-link"><i className="bi bi-person-plus-fill"></i>    Add new Student</span>
+                                </Link>
+                            </li>
                             <li className="nav-item active">
-                                <a className="nav-link" href="#"><i className="bi bi-list-ul"></i> Student List</a>
+                                <Link className="navstyle" to="/get-all-students">
+                                    <span className="nav-link"><i className="bi bi-list-ul"></i>    Student List</span>
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#"><i className="bi bi-search"></i>Find Student</a>
+                                <Link className="navstyle" to="/get-one-students">
+                                    <span className="nav-link"><i className="bi bi-search"></i>   Find Student</span>
+                                </Link>
                             </li>
                         </ul>
                     </div>
-                    </div>
-                </nav>
+                </div>
+            </nav>
         )
     }
 }

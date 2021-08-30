@@ -1,17 +1,23 @@
 import React from 'react'
-import { Department, StudentResponseModel } from '../Models/Students';
+import { StudentResponseModel } from '../Models/Students';
 import { loading } from '../Utilities/Gernal-Utilities';
+import { CustomModel } from './CustomModel';
+import { ModelBox } from './ModelBox';
 interface Props { }
 
 interface State {
     StudentDetails: StudentResponseModel[],
+    modalShow: boolean,
+    ID : number,
 }
 
-export class GerAllStudents extends React.Component<Props, State> {
+export class GetAllStudents extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            StudentDetails: []
+            StudentDetails: [],
+            modalShow: false,
+            ID:0,
         };
         this.GetStudents = this.GetStudents.bind(this);
     }
@@ -39,7 +45,7 @@ export class GerAllStudents extends React.Component<Props, State> {
     //         .then((res : StudentResponseModel)=>{
     //             if(res){
     //                 const StudentDetails = res;
-    //                 this.setState({StudentDetails :{ ...StudentDetails }});
+    //                 this.this.({StudentDetails :{ ...StudentDetails }});
     //             }
     //         })
     //         .catch(() => {
@@ -50,14 +56,29 @@ export class GerAllStudents extends React.Component<Props, State> {
     componentDidMount() {
         this.GetStudents();
     }
+    async Delete_async (){
+        loading(true)
+        let Id = this.state.ID;
+        let url = `https://localhost:44378/student/DeleteStudent/${Id}`;
+        fetch(url, {
+            method: "DELETE",
+        })
+    }
     render() {
         let Student = this.state.StudentDetails;
         console.log(Student)
+        console.log(this.state.modalShow)
+        const {modalShow}=this.state;
 
         return (
             <div className="my-5">
-                <h3 className="text-center">All Student Record</h3>
-                <table className="m-4 table table-bordered">
+                <ModelBox
+                    show={modalShow}
+                    onHide={() => {this.setState({modalShow:false})}}
+                />
+                <h3 className="text-center">Student's List</h3>
+                <hr />
+                <table className="my-4 container table table-bordered">
                     <thead className="table bg-dark text-white">
                         <tr>
                             <th>ID</th>
@@ -92,7 +113,7 @@ export class GerAllStudents extends React.Component<Props, State> {
                                     <td>
                                         {std.phoneNo}
                                     </td>
-                                    <td>
+                                    <td className="trim">
                                         {std.address}
                                     </td>
                                     <td>
@@ -100,8 +121,20 @@ export class GerAllStudents extends React.Component<Props, State> {
                                     </td>
                                     <td>
                                         <span>
-                                            <button className='btn btn-outline-success btn-sm mx-1'><i className="bi bi-pencil-fill"></i></button>
-                                            <button className='btn btn-outline-danger btn-sm mx-1'><i className="bi bi-trash"></i></button>
+                                            <button
+                                                onClick={()=>{
+                                                    this.setState({ID:std.id})
+                                                    
+                                                }}
+                                                className='btn btn-outline-success btn-sm mx-1'>
+                                                <i className="bi bi-pencil-fill"></i>
+                                            </button>
+                                            {console.log(std.id)}
+                                            <button
+                                                className='btn btn-outline-danger btn-sm mx-1'
+                                                onClick={() => { this.setState({ modalShow: true }) }}>
+                                                <i className="bi bi-trash"></i>
+                                            </button>
                                         </span>
                                     </td>
                                 </tr>
