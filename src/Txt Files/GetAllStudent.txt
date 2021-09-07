@@ -1,0 +1,173 @@
+import React from 'react'
+import { StudentResponseModel } from '../Models/Students';
+import { loading } from '../Utilities/Gernal-Utilities';
+import { ModelBox } from './ModelBox';
+interface Props { }
+
+interface State {
+    StudentDetails: StudentResponseModel[],
+    modalShow: boolean,
+    ID?: number,
+}
+
+export class GetAllStudents extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            StudentDetails: [],
+            modalShow: false,
+            ID: 0,
+        };
+        this.GetStudents = this.GetStudents.bind(this);
+    }
+    async GetStudents() {
+        loading(true)
+        let url = 'https://localhost:44378/student/GetStudents';
+        fetch(url, {
+            method: "GET",
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    loading(true)
+                }
+                return response.json()
+            })
+            .then(data => {
+                this.setState({ StudentDetails: data })
+                loading(false);
+            })
+    }
+    // async GetStudents() {
+    //     try{
+    //         loading(true);
+    //         await GetAllStudents()
+    //         .then((res : StudentResponseModel)=>{
+    //             if(res){
+    //                 const StudentDetails = res;
+    //                 this.this.({StudentDetails :{ ...StudentDetails }});
+    //             }
+    //         })
+    //         .catch(() => {
+    //             loading(false);
+    //         });
+    //     } catch (error) {}
+    // }
+    componentDidMount() {
+        this.GetStudents();
+    }
+    // async Delete_async() {
+    //     loading(true)
+    //     let Id = this.state.ID;
+    //     let url = `https://localhost:44378/student/DeleteStudent/${Id}`;
+    //     fetch(url, {
+    //         method: "DELETE",
+    //     })
+    //     loading(true)
+    //     this.GetStudents();
+    //     loading(false);
+    // }
+
+    handleClick = (id:number,hide:boolean) => {
+        loading(true)
+        this.setState({modalShow:true})
+        // let Id = this.state.ID;
+        let url = `https://localhost:44378/student/DeleteStudent/${id}`;
+        fetch(url, {
+            method: "DELETE",
+        })
+        loading(true)
+        this.GetStudents();
+        loading(false);
+        console.log("Irfan :",this.props)
+    }
+    render() {
+        let Student = this.state.StudentDetails;
+        const { modalShow } = this.state;
+        let Id = this.state.ID;
+        return (
+            <div className="my-5">
+
+                <h3 className="text-center">Student's List</h3>
+                <hr />
+                <table className="my-4 container table table-bordered">
+                    <thead className="table bg-dark text-white">
+                        <tr>
+                            <th>ID</th>
+                            <th>First Name</th>
+                            <th>Middle Name</th>
+                            <th>Last Name</th>
+                            <th>Registeration No</th>
+                            <th>Phone No</th>
+                            <th>Address</th>
+                            <th>Department</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Student?.map((std, key) => {
+                            return (
+                                <tr key={key} className="text-center">
+                                    <td>
+                                        {std.id}</td>
+                                    <td>
+                                        {std.firstName}
+                                    </td>
+                                    <td>
+                                        {std.middleName}
+                                    </td>
+                                    <td>
+                                        {std.lastName}
+                                    </td>
+                                    <td>
+                                        {std.registerationNo}
+                                    </td>
+                                    <td>
+                                        {std.phoneNo}
+                                    </td>
+                                    <td className="trim">
+                                        {std.address}
+                                    </td>
+                                    <td>
+                                        {std.department}
+                                    </td>
+                                    <td>
+                                        <span>
+                                            <button
+                                                className='btn btn-outline-success btn-sm mx-1'>
+                                                <i className="bi bi-pencil-fill"></i>
+                                            </button>
+                                            <button
+                                                className='btn btn-outline-danger btn-sm mx-1'
+                                                // onClick={
+                                                //     () => {
+                                                //      this.setState({ ID: std.id, modalShow: true }) 
+                                                //     }
+                                                //      }>
+                                                onClick={()=>{
+                                                        this.handleClick(std.id,true)
+                                                    }
+                                                }
+                                            >
+                                                <i className="bi bi-trash"></i>
+                                            </button>
+                                        </span>
+                                    </td>
+                                    <ModelBox
+                                        StudentName="Irfan Ullah Shah"
+                                        show={modalShow}
+                                        onDelete={
+                                                () => {
+                                                    this.handleClick(std.id,true)
+                                                }
+                                        }
+                                        onHide={() => { this.setState({ modalShow: false }) }}
+                                    />
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
+}

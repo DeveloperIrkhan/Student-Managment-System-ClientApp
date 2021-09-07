@@ -1,4 +1,3 @@
-
 .spinnerContainer {
 	width: 100vw !important;
 	height: 100% !important;
@@ -19,45 +18,82 @@
 	top: 40vh !important;
 	z-index: 999 !important;
 }
-.col-lg-5 .myInput{
-	border: none!;
+
+.col-lg-5 .myInput {
+	border: none !;
 	border-radius: 20px;
 }
-.navstyle{
+
+.navstyle {
 	text-decoration: none;
-	color:white;
+	color: white;
 }
-.f-20b{
+
+.f-20b {
 	font-size: 20px;
 	font-weight: 600;
 }
-.f-20{
+
+.f-20 {
 	font-size: 20px;
 	font-weight: 400;
 }
-.f-16b{
+
+.f-16b {
 	font-size: 16px;
 	font-weight: 600;
 }
-.f-16{
+
+.f-16 {
 	font-size: 16px;
 	font-weight: 400;
 }
 
-.box{
+.box {
 	background-color: gray;
 	border-radius: 70px;
-	box-shadow:  2px 2px 10px gray;
+	box-shadow: 2px 2px 10px gray;
 }
+
 .trim {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
-.modelbackgound{
+
+.modelbackgound {
 	background-color: rgb(146, 146, 146);
 	height: 100%;
 	width: 100%;
-	position:fixed;
+	position: fixed;
 	transition: all 1.3s;
+}
+
+.dropdown-title {
+		border: 2px solid gray;
+		font-size: 18px;
+		line-height: 22px;
+		color: rgb(7, 9, 30);
+		width: 100%;
+		height: 60px;
+		margin: auto;
+		position: relative;
+		top: 5px;
+		padding-left: 0px;
+		margin-Left: -8px;
+}
+.col-lg-5 .savebtn{
+	border-radius:20px;
+	height: 50px;
+	color: white;
+	font-size: 20px;
+
+	font-weight: 400;
+	text-shadow:1px 2px 3px  black;
+	border :2px solid #c0392b; 
+	background-color:#c0392b;
+}
+.col-lg-5 .savebtn:hover{
+	background-color: white;
+	color: #c0392b;
 }

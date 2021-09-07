@@ -1,0 +1,156 @@
+import axios from 'axios';
+import React from 'react'
+import { Departments } from '../Models/Departments';
+import { StudentResponseModel } from '../Models/Students';
+import { loading } from '../Utilities/Gernal-Utilities';
+import { DropDownList } from './DropDownList';
+interface Props { }
+
+interface State {
+    AddStudent: StudentResponseModel;
+}
+
+export class AddStudent extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            AddStudent: Object(),
+        };
+        this.PostStudentdata = this.PostStudentdata.bind(this)
+    }
+     PostStudentdata() {
+        let studentDetails = {
+            firstName: this.state.AddStudent.firstName,
+            middleName: this.state.AddStudent.middleName,
+            lastName: this.state.AddStudent.lastName,
+            registerationNo: this.state.AddStudent.registerationNo,
+            phoneNo: this.state.AddStudent.phoneNo,
+            address: this.state.AddStudent.address,
+            department: this.state.AddStudent.department,
+        }
+        let API_URL = "https://localhost:44378/Student/AddStudent";
+        let request = axios.post(API_URL, studentDetails)
+        // console.log("this data is inseted" + request.data)
+    }
+  
+    // async PostStudentdata() {
+    //     loading(true);
+    //     let formdata = new FormData();
+    //     formdata.append("firstName", this.state.AddStudent.firstName)
+    //     formdata.append("middleName", this.state.AddStudent.middleName)
+    //     formdata.append("lastName", this.state.AddStudent.lastName)
+    //     formdata.append("registerationNo", this.state.AddStudent.registerationNo)
+    //     formdata.append("phoneNo", this.state.AddStudent.phoneNo)
+    //     formdata.append("address", this.state.AddStudent.address)
+    //     formdata.append("department", this.state.AddStudent.department)
+    //     let API_URL = "https://localhost:44378/Student/AddStudent";
+    //     await fetch(API_URL, {
+    //         method: "POST",
+    //         body:formdata
+    //     })
+    //         .then(response => {
+    //             console.log("Response is:" + response)
+    //         })
+    //         .catch(error => {
+    //             console.log(error)
+    //         })
+    //     loading(false);
+    // }
+
+    render() {
+        let Save_Student = this.state.AddStudent;
+        let dept = Departments
+        return (
+            <div className="py-5 row col-12">
+                <form>
+                    <div className="col-lg-5 col-12 m-auto m-0 col-md-10 col-xm-9">
+                        <h5 className="text-muted" >Please Enter Your Full Name</h5>
+                        <div className="">
+                            <input className="myInput border-3 form-control m-2" placeholder="Here Your First Name" type="text"
+                                value={Save_Student.firstName}
+                                name="firstName"
+                                onChange={(e) => {
+                                    Save_Student.firstName = e.target.value
+                                }}
+                            />
+                        </div>
+                        <div className="">
+                            <input className="myInput border-3 form-control m-2" placeholder="Here Your Middle Name" type="text"
+                                value={Save_Student.middleName}
+                                name="middleName"
+                                onChange={(e) => {
+                                    Save_Student.middleName = e.target.value
+                                }}
+                            />
+                        </div>
+                        <div className="">
+                            <input className="myInput border-3 form-control m-2" placeholder="Here Your Last Name" type="text"
+                                value={Save_Student.lastName}
+                                name="lastName"
+                                onChange={(e) => {
+                                    Save_Student.lastName = e.target.value
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-lg-5 col-12 m-auto m-0 col-md-10 col-xm-9">
+                        <h5 className="text-muted" >Please Enter Other's cradincial</h5>
+                        <div className="">
+                            <input className="myInput border-3 form-control m-2" placeholder="Your Registeration No" type="text"
+                                value={Save_Student.registerationNo}
+                                name="registerationNo"
+                                onChange={(e) => {
+                                    Save_Student.registerationNo = e.target.value
+                                }}
+                            />
+                        </div>
+                        <div className="">
+                            <input className="myInput border-3 form-control m-2" placeholder="Your Phone No" type="text"
+                                value={Save_Student.phoneNo}
+                                name="phoneNo"
+                                onChange={(e) => {
+                                    Save_Student.phoneNo = e.target.value
+                                }}
+                            />
+                        </div>
+                        <div className="">
+                            <input className="myInput border-3 form-control m-2" placeholder="Your Full Address" type="text"
+                                value={Save_Student.address}
+                                name="address"
+                                onChange={(e) => {
+                                    Save_Student.address = e.target.value
+                                }}
+                            />
+                        </div>
+                        <div className="">
+                            <input className="myInput border-3 form-control m-2" placeholder="Your Department" type="text"
+                                value={Save_Student.department}
+                                name="department"
+                                onChange={(e) => {
+                                    Save_Student.department = e.target.value
+                                }}
+                            />
+                            <DropDownList
+                                title="Select Student's Department"
+                                value={Save_Student.department}
+                                list={dept}
+                                onChange={(dept) => {
+                                    Save_Student.department = dept;
+                                }} />
+                        </div>
+
+
+                    </div>
+                    <div className="col-lg-5 p-4 col-12 col-md-10  m-auto m-0 col-xm-9">
+                        <button
+                            onClick={
+                                    this.PostStudentdata
+                            }
+                            className="savebtn col-12">Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        )
+    }
+}
