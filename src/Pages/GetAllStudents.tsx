@@ -1,30 +1,53 @@
 import React from 'react'
 import { StudentResponseModel } from '../Models/Students';
 import { loading } from '../Utilities/Gernal-Utilities';
-import { CustomModel } from './CustomModel';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { ModelBox } from './ModelBox';
 interface Props { }
 
 interface State {
     StudentDetails: StudentResponseModel[],
     modalShow: boolean,
-    ID : number,
+    ID: number,
 }
-
 export class GetAllStudents extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
             StudentDetails: [],
             modalShow: false,
-            ID:0,
+            ID: 0,
         };
         this.GetStudents = this.GetStudents.bind(this);
+    }
+    async handleClick(id: number, hide: boolean) {
+        try {
+            this.setState({ modalShow: true });
+            loading(true);
+            let url = `https://localhost:44378/student/DeleteStudent/${id}`;
+            await fetch(url, {
+                method: "DELETE",
+            })
+            loading(false)
+            this.setState({ modalShow: false });
+            this.GetStudents();
+            toast.dark("student delete successfully!!!",
+            {
+                autoClose: 2000,
+            })
+            console.log(id)
+        }
+        catch {
+            loading(false)
+            console.log("something went wrong!!!")
+
+        }
     }
     async GetStudents() {
         loading(true)
         let url = 'https://localhost:44378/student/GetStudents';
-        fetch(url, {
+        await fetch(url, {
             method: "GET",
         })
             .then((response) => {
@@ -36,46 +59,30 @@ export class GetAllStudents extends React.Component<Props, State> {
             .then(data => {
                 this.setState({ StudentDetails: data })
                 loading(false);
+                toast.success("Students list refreshed!!!",
+                    {
+                        autoClose: 6000,
+                    })
             })
     }
-    // async GetStudents() {
-    //     try{
-    //         loading(true);
-    //         await GetAllStudents()
-    //         .then((res : StudentResponseModel)=>{
-    //             if(res){
-    //                 const StudentDetails = res;
-    //                 this.this.({StudentDetails :{ ...StudentDetails }});
-    //             }
-    //         })
-    //         .catch(() => {
-    //             loading(false);
-    //         });
-    //     } catch (error) {}
-    // }
     componentDidMount() {
         this.GetStudents();
     }
-    async Delete_async (){
-        loading(true)
-        let Id = this.state.ID;
-        let url = `https://localhost:44378/student/DeleteStudent/${Id}`;
-        fetch(url, {
-            method: "DELETE",
-        })
-    }
+
     render() {
         let Student = this.state.StudentDetails;
-        console.log(Student)
-        console.log(this.state.modalShow)
-        const {modalShow}=this.state;
+        const { modalShow } = this.state;
 
         return (
             <div className="my-5">
                 <ModelBox
                     show={modalShow}
-                    onHide={() => {this.setState({modalShow:false})}}
+                    onHide={() => { this.setState({ modalShow: false }) }}
+                    onDelete={() => {
+                        this.handleClick(this.state.ID, this.state.modalShow)
+                    }}
                 />
+                <ToastContainer style={{ paddingTop: "50px" }} />
                 <h3 className="text-center">Student's List</h3>
                 <hr />
                 <table className="my-4 container table table-bordered">
@@ -95,7 +102,7 @@ export class GetAllStudents extends React.Component<Props, State> {
                     <tbody>
                         {Student?.map((std, key) => {
                             return (
-                                <tr key={key} className="text-center">
+                                <tr key={key} className="text-center trim">
                                     <td>
                                         {std.id}</td>
                                     <td>
@@ -122,17 +129,19 @@ export class GetAllStudents extends React.Component<Props, State> {
                                     <td>
                                         <span>
                                             <button
-                                                onClick={()=>{
-                                                    this.setState({ID:std.id})
-                                                    
-                                                }}
+                                                onClick={() => {
+                                                    this.setState({ ID: std.id })
+                                                }
+                                                }
                                                 className='btn btn-outline-success btn-sm mx-1'>
                                                 <i className="bi bi-pencil-fill"></i>
                                             </button>
-                                            {console.log(std.id)}
                                             <button
                                                 className='btn btn-outline-danger btn-sm mx-1'
-                                                onClick={() => { this.setState({ modalShow: true }) }}>
+                                                onClick={() => {
+                                                    this.setState({ ID: std.id })
+                                                    this.setState({ modalShow: true })
+                                                }}>
                                                 <i className="bi bi-trash"></i>
                                             </button>
                                         </span>
@@ -145,4 +154,5 @@ export class GetAllStudents extends React.Component<Props, State> {
             </div>
         )
     }
+
 }

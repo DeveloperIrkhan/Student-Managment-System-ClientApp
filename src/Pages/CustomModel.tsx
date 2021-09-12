@@ -15,7 +15,6 @@ interface Props {
     onDeleteMethod?: () => void;
     onCancelMethod?: () => void;
     showHeaderCloseBtn?: boolean;
-    isDisabledSave?: boolean;
     deleteBtn: string;
 }
 
@@ -28,7 +27,7 @@ export class CustomModel extends React.Component<Props, State> {
     }
 
     render() {
-        const { ShowHeadingCenter, insideText, deleteBtn, fullSize, isCenterDailoge, lanchButtonText, showHeaderCloseBtn, idforboth, HeadingText, cancelBtn, saveBtn, isBtnCenter, isDisabledSave } = this.props;
+        const { ShowHeadingCenter, insideText, deleteBtn, fullSize, isCenterDailoge, lanchButtonText, showHeaderCloseBtn, idforboth, HeadingText, cancelBtn, saveBtn } = this.props;
         return (
             <div className="" style={{ maxWidth: "80vw", maxHeight: "70vh" }}>
                 <div className="" id={`staticBackdrop${idforboth}`} data-keyboard="true" tab-index="-1" aria-labelledby={`staticBackdropLabel${idforboth}`} aria-hidden="true">
@@ -45,7 +44,7 @@ export class CustomModel extends React.Component<Props, State> {
                                 )}
                             </div>
                             <div className="px-2 py-4 text-danger">
-                                <h5></h5>
+                                <h5>{insideText}</h5>
                             </div>
                             <div className={`${saveBtn || cancelBtn || deleteBtn ? "modal-footer d-flex" : ""}`}>
 
