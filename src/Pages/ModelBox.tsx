@@ -30,9 +30,9 @@ export class ModelBox extends React.Component<Props, State> {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <h4>{this.props.StudentName}</h4>
+                        <h4>Student Name : {this.props.StudentName}</h4>
                         <p>
-                            Are You Sure You want to delete this Student
+                            <b>Are You Sure You want to delete?</b>
                         </p>
                     </Modal.Body>
                     <Modal.Footer>

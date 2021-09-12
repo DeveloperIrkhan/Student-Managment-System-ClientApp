@@ -4,6 +4,8 @@ import { loading } from '../Utilities/Gernal-Utilities';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 interface Props { }
 
 interface State {
@@ -43,7 +45,7 @@ export class AddStudent extends React.Component<Props, State> {
         else {
             this.setState({ validate: true })
             this.PostStudentdata();
-           
+
         }
     }
 
@@ -55,7 +57,7 @@ export class AddStudent extends React.Component<Props, State> {
             loading(true);
             await axios.post(API_URL, Student)
             loading(false);
-                toast.success("Student Details Added Successfully!!!!")
+            toast.success("Student Details Added Successfully!!!!")
         }
         catch {
             loading(false);
@@ -65,6 +67,17 @@ export class AddStudent extends React.Component<Props, State> {
                 })
         }
     }
+    // componentDidUpdate() {
+    //     let student = this.state.Student;
+    //     student.firstName = "",
+    //     student.middleName = "";
+    //     student.lastName = "";
+    //     student.registerationNo = "";
+    //     student.phoneNo = "";
+    //     student.address = "";
+    //     student.department = "";
+    //     this.setState({Student:student})
+    // }
 
     render() {
         let Save_Student = this.state.Student;
@@ -77,7 +90,7 @@ export class AddStudent extends React.Component<Props, State> {
                     <div className="col-lg-5 col-12 m-auto m-0">
                         <h5 className="text-muted" >Please Enter Your Full Name</h5>
                         <div className="Textbox-div">
-                            <input className={`${Save_Student.firstName === "" && validate!==true ? "RedBorders form-control m-2" : "myInput border-3 form-control m-2"}`}
+                            <input className={`${Save_Student.firstName === "" && validate !== true ? "RedBorders form-control m-2" : "myInput border-3 form-control m-2"}`}
                                 placeholder="Here Your First Name"
                                 type="text"
                                 value={Save_Student.firstName}
@@ -87,7 +100,7 @@ export class AddStudent extends React.Component<Props, State> {
                             />
                         </div>
                         <div className="Textbox-div">
-                            <input className={`${Save_Student.middleName === "" && validate!==true ? "RedBorders form-control m-2" : "myInput border-3 form-control m-2"}`}
+                            <input className={`${Save_Student.middleName === "" && validate !== true ? "RedBorders form-control m-2" : "myInput border-3 form-control m-2"}`}
                                 placeholder="Here Your Middle Name" type="text"
                                 value={Save_Student.middleName}
                                 onChange={(e) => {
@@ -96,7 +109,7 @@ export class AddStudent extends React.Component<Props, State> {
                             />
                         </div>
                         <div className="Textbox-div">
-                            <input className={`${Save_Student.lastName === "" && validate!==true ? "RedBorders form-control m-2" : "myInput border-3 form-control m-2"}`}
+                            <input className={`${Save_Student.lastName === "" && validate !== true ? "RedBorders form-control m-2" : "myInput border-3 form-control m-2"}`}
                                 placeholder="Here Your Last Name" type="text"
                                 value={Save_Student.lastName}
                                 onChange={(e) => {
@@ -108,7 +121,7 @@ export class AddStudent extends React.Component<Props, State> {
                     <div className="col-lg-5 col-12 m-auto m-0">
                         <h5 className="text-muted" >Please Enter Other's cradincial</h5>
                         <div className="Textbox-div">
-                            <input className={`${Save_Student.registerationNo === "" && validate!==true ? "RedBorders form-control m-2" : "myInput border-3 form-control m-2"}`}
+                            <input className={`${Save_Student.registerationNo === "" && validate !== true ? "RedBorders form-control m-2" : "myInput border-3 form-control m-2"}`}
                                 placeholder="Your Registeration No" type="text"
                                 value={Save_Student.registerationNo}
                                 onChange={(e) => {
@@ -117,7 +130,7 @@ export class AddStudent extends React.Component<Props, State> {
                             />
                         </div>
                         <div className="Textbox-div">
-                            <input className={`${Save_Student.phoneNo === "" && validate!==true ? "RedBorders form-control m-2" : "myInput border-3 form-control m-2"}`}
+                            <input className={`${Save_Student.phoneNo === "" && validate !== true ? "RedBorders form-control m-2" : "myInput border-3 form-control m-2"}`}
                                 placeholder="Your Phone No" type="text"
                                 value={Save_Student.phoneNo}
                                 onChange={(e) => {
@@ -126,7 +139,7 @@ export class AddStudent extends React.Component<Props, State> {
                             />
                         </div>
                         <div className="Textbox-div">
-                            <input className={`${Save_Student.address === "" && validate!==true ? "RedBorders form-control m-2" : "myInput border-3 form-control m-2"}`}
+                            <input className={`${Save_Student.address === "" && validate !== true ? "RedBorders form-control m-2" : "myInput border-3 form-control m-2"}`}
                                 placeholder="Your Full Address" type="text"
                                 value={Save_Student.address}
                                 onChange={(e) => {
@@ -135,7 +148,7 @@ export class AddStudent extends React.Component<Props, State> {
                             />
                         </div>
                         <div className="Textbox-div">
-                            <input className={`${Save_Student.department === "" && validate!==true ? "RedBorders form-control m-2" : "myInput border-3 form-control m-2"}`}
+                            <input className={`${Save_Student.department === "" && validate !== true ? "RedBorders form-control m-2" : "myInput border-3 form-control m-2"}`}
                                 placeholder="Your Department" type="text"
                                 value={Save_Student.department}
                                 onChange={(e) => {

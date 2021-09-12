@@ -19,7 +19,7 @@
 	z-index: 999 !important;
 }
 
-.col-lg-5 .myInput {
+.Textbox-div .myInput {
 	border: none !;
 	border-radius: 20px;
 }
@@ -101,4 +101,7 @@
 .RedBorders{
 	border:4px solid rgb(218, 106, 106)!important;
 	border-radius: 20px!important;
+}
+.Textbox-div PhoneInput{
+	border: none !important;
 }

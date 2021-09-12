@@ -4,12 +4,15 @@ import { loading } from '../Utilities/Gernal-Utilities';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ModelBox } from './ModelBox';
+import { EditStudentModal } from './EditStudentModal';
 interface Props { }
 
 interface State {
     StudentDetails: StudentResponseModel[],
     modalShow: boolean,
+    EditModalShow: boolean,
     ID: number,
+    StudentName?:string
 }
 export class GetAllStudents extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -17,6 +20,8 @@ export class GetAllStudents extends React.Component<Props, State> {
         this.state = {
             StudentDetails: [],
             modalShow: false,
+            EditModalShow: false,
+            StudentName:"",
             ID: 0,
         };
         this.GetStudents = this.GetStudents.bind(this);
@@ -33,9 +38,9 @@ export class GetAllStudents extends React.Component<Props, State> {
             this.setState({ modalShow: false });
             this.GetStudents();
             toast.dark("student delete successfully!!!",
-            {
-                autoClose: 2000,
-            })
+                {
+                    autoClose: 2000,
+                })
             console.log(id)
         }
         catch {
@@ -49,6 +54,10 @@ export class GetAllStudents extends React.Component<Props, State> {
         let url = 'https://localhost:44378/student/GetStudents';
         await fetch(url, {
             method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
         })
             .then((response) => {
                 if (!response.ok) {
@@ -71,15 +80,25 @@ export class GetAllStudents extends React.Component<Props, State> {
 
     render() {
         let Student = this.state.StudentDetails;
-        const { modalShow } = this.state;
+        const { modalShow, EditModalShow, StudentName } = this.state;
 
         return (
             <div className="my-5">
                 <ModelBox
                     show={modalShow}
+                    StudentName={StudentName}
                     onHide={() => { this.setState({ modalShow: false }) }}
                     onDelete={() => {
                         this.handleClick(this.state.ID, this.state.modalShow)
+                    }}
+                />
+                <EditStudentModal
+                    show={EditModalShow}
+                    onHide={() => {
+                        this.setState({EditModalShow:false})
+                    }}
+                    onUpdate={() => {
+
                     }}
                 />
                 <ToastContainer style={{ paddingTop: "50px" }} />
@@ -129,17 +148,17 @@ export class GetAllStudents extends React.Component<Props, State> {
                                     <td>
                                         <span>
                                             <button
+                                                className='btn btn-outline-success btn-sm mx-1'
                                                 onClick={() => {
                                                     this.setState({ ID: std.id })
-                                                }
-                                                }
-                                                className='btn btn-outline-success btn-sm mx-1'>
+                                                    this.setState({ EditModalShow: true })
+                                                }}>
                                                 <i className="bi bi-pencil-fill"></i>
                                             </button>
                                             <button
                                                 className='btn btn-outline-danger btn-sm mx-1'
                                                 onClick={() => {
-                                                    this.setState({ ID: std.id })
+                                                    this.setState({ ID: std.id, StudentName:std.firstName })
                                                     this.setState({ modalShow: true })
                                                 }}>
                                                 <i className="bi bi-trash"></i>
