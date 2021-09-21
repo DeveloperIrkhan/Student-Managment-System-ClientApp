@@ -20,10 +20,13 @@
 }
 
 .Textbox-div .myInput {
-	border: none !;
 	border-radius: 20px;
 }
 
+.Textbox-div .RedBorders{
+	border:2px solid rgb(231, 142, 142);
+	border-radius: 20px!important;
+}
 .navstyle {
 	text-decoration: none;
 	color: white;
@@ -98,10 +101,6 @@
 	color: #c0392b;
 }
 
-.RedBorders{
-	border:4px solid rgb(218, 106, 106)!important;
-	border-radius: 20px!important;
-}
 .Textbox-div PhoneInput{
 	border: none !important;
 }
